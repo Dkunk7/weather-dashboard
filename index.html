@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <h1 class = "hed">Check Out the Weather!</h1>
+        <h1 class = "hed" id = "hed">Check Out the Weather!</h1>
         <h4 class = "hed">It's accurate for sure</h4>
     </header>
 
@@ -25,41 +25,54 @@
                 
             </div>
             <div class="day0 col-10 pt-3 pb-3 card">
-                <h2 id = "city-name">City Name Here</h2>
+                <div id="icon"><h2 id = "city-name">City Name</h2><img id="wicon0" src="" alt="Weather icon"></div>
                 <h5 id = "temp0">Temp: </h5>
                 <h5 id = "wind0">Wind: </h5>
                 <h5 id = "hum0">Humidity: </h5>
                 <h5 id= "uv">UV Index: </h5>
             </div>
-            <div class = "col-10 mt-4 mb-2 offset-md-2">
-                <h4>5 day forecast</h4>
+            
+            <div class = "col-12 mt-4 mb-2 offset-md-2">
+                <!-- offset-md-2 -->
+                <h4>5-day forecast</h4>
             </div>
-            <div class="day1 col-sm pt-3 card offset-md-2">
+            <div class = "col-sm pt-3 ">
+                <h4 class = "history-sect">History</h4>
+                <div id = "history">
+                </div>
+            </div>     
+            <div class="day day1 col-sm pt-3 card ">
+                <!-- offset-md-2 -->
                 <h5 id = d1>Date</h5>
+                <div id="icon"><img id="wicon1" src="" alt="Weather icon"></div>
                 <p id = "temp1">Temp: </p>
                 <p id = "wind1">Wind: </p>
                 <p id = "hum1">Humidity: </p>
             </div>
-            <div class="day2 col-sm pt-3 card">
+            <div class="day day2 col-sm pt-3 card">
                 <h5 id = d2>Date</h5>
+                <div id="icon"><img id="wicon2" src="" alt="Weather icon"></div>
                 <p id = "temp2">Temp: </p>
                 <p id = "wind2">Wind: </p>
                 <p id = "hum2">Humidity: </p>
             </div>
-            <div class="day3 col-sm pt-3 card">
+            <div class="day day3 col-sm pt-3 card">
                 <h5 id = d3>Date</h5>
+                <div id="icon"><img id="wicon3" src="" alt="Weather icon"></div>
                 <p id = "temp3">Temp: </p>
                 <p id = "wind3">Wind: </p>
                 <p id = "hum3">Humidity: </p>
             </div>
-            <div class="day4 col-sm pt-3 card">
+            <div class="day day4 col-sm pt-3 card">
                 <h5 id = d4>Date</h5>
+                <div id="icon"><img id="wicon4" src="" alt="Weather icon"></div>
                 <p id = "temp4">Temp: </p>
                 <p id = "wind4">Wind: </p>
                 <p id = "hum4">Humidity: </p>
             </div>
-            <div class="day5 col-sm pt-3 card">
+            <div class="day day5 col-sm pt-3 card">
                 <h5 id = d5>Date</h5>
+                <div id="icon"><img id="wicon5" src="" alt="Weather icon"></div>
                 <p id = "temp5">Temp: </p>
                 <p id = "wind5">Wind: </p>
                 <p id = "hum5">Humidity: </p>

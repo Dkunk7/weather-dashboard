@@ -1,4 +1,5 @@
-var day1El = $(`.day1`);
+var button = document.querySelector(`#btn`);
+var historyUL = document.querySelector(`#history`);
 
 
 var getCurrentWeather = function(city) {
@@ -9,9 +10,9 @@ var getCurrentWeather = function(city) {
             // console.log(response.json());
             response.json().then(function(data) {
                 console.log(data);
-                console.log(data.main.temp);
-                console.log(data.wind.speed);
-                console.log(data.main.humidity);
+                appendCurrentData(data);
+                historyAdd(city);
+                saveSearch(city);
                 var lon = data.coord.lon;
                 var lat = data.coord.lat;
                 getFutureWeather(lon, lat);
@@ -26,8 +27,11 @@ var getFutureWeather = function(lon, lat) {
     fetch(apiUrl).then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
-                var tempUV = document.querySelector()
+                console.log(data);
+                var tempUV = document.querySelector(`#uv`);
                 var currentUVI = data.current.uvi;
+                tempUV.textContent = "UV Index: ";
+                tempUV.textContent += currentUVI;
                 console.log(currentUVI);
                 for (i = 1; i < 6; i++) {
                     appendFutureData(data, i);
@@ -38,9 +42,30 @@ var getFutureWeather = function(lon, lat) {
 };
 // API key: b41246aaa8c624213d0a82453469cba0
 
-var appendCurrentData = function() {
+var appendCurrentData = function(data) {
+    var name = data.name;
+    var mainTemp = data.main.temp;
+    var mainWind = data.wind.speed;
+    var mainHumid = data.main.humidity;
+    var mainIconImg = data.weather[0].icon;
+    var mainIconUrl = "http://openweathermap.org/img/w/" + mainIconImg + ".png";
 
-}
+    $(`#wicon0`).attr('src', mainIconUrl);
+    
+    var nameEl = document.querySelector(`#city-name`);
+    var mainTEl = document.querySelector(`#temp0`);
+    var mainWEl = document.querySelector(`#wind0`);
+    var mainHEl = document.querySelector(`#hum0`);
+
+    mainTEl.textContent = `Temp: `;
+    mainWEl.textContent = `Wind: `;
+    mainHEl.textContent = `Humidity: `;
+
+    nameEl.textContent = name;
+    mainTEl.textContent += `${mainTemp} \u00B0F`;
+    mainWEl.textContent += `${mainWind} mph`;
+    mainHEl.textContent += `${mainHumid}%`;
+};
 
 var appendFutureData = function(data, i) {
     var dateNum = data.daily[i].dt;
@@ -49,16 +74,63 @@ var appendFutureData = function(data, i) {
     var temp = data.daily[i].feels_like.day;
     var humid = data.daily[i].humidity;
     var wind = data.daily[i].wind_speed;
+    var iconImg = data.daily[i].weather[0].icon;
+    var iconUrl = "http://openweathermap.org/img/w/" + iconImg + ".png";
+
+    $(`#wicon${i}`).attr('src', iconUrl);
     
     var tempDate = document.querySelector((`#d${i}`));
     var tempTemp = document.querySelector(`#temp${i}`);
     var tempWind = document.querySelector(`#wind${i}`);
     var tempHumid = document.querySelector(`#hum${i}`);
+
+    tempTemp.textContent = `Temp: `;
+    tempWind.textContent = `Wind: `;
+    tempHumid.textContent = `Humidity: `;
     
     tempDate.textContent = date;
     tempTemp.textContent += `${temp} \u00B0F`;
     tempWind.textContent += `${wind} mph`;
     tempHumid.textContent += `${humid}%`;
 
+};
 
+var historyAdd = function(searchText) {
+    var newHisEl = document.createElement(`p`);
+    var newHis = document.createTextNode(`${searchText}`);
+
+    newHisEl.appendChild(newHis)
+    historyUL.append(newHisEl);
+
+};
+// pretty good reference for future use of localStorage :) *Dont forget to use JSON stringify and parse!*
+var saveSearch = function(city) {
+    var savePull = JSON.parse(localStorage.getItem("cityHist")) || [];
+    
+    savePull.push({
+        city: city
+    });
+    localStorage.setItem("cityHist", JSON.stringify(savePull));
+};
+
+var loadSearch = function() {
+    var saves = JSON.parse(localStorage.getItem("cityHist"));
+
+    if (!saves) {
+        return
+    } else {
+        for (i = 0; i < saves.length; i++) {
+            historyAdd(saves[i].city);
+        }
+    }
 }
+
+loadSearch();
+
+button.addEventListener("click", function() {
+    var searchText = document.getElementById(`text`).value;
+    getCurrentWeather(searchText);
+    console.log(searchText);
+
+    searchText = "";
+});

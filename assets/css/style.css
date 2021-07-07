@@ -6,17 +6,50 @@ header {
     text-align: center;
 }
 
+#hed {
+    background-image: linear-gradient(to right,rgb(0, 183, 255), rgb(62, 45, 155) );
+    padding: 10px 10px;
+    color: whitesmoke;
+}
+
+#history p {
+    list-style: none;
+    text-align: center;
+}
+
 .col-sm {
     margin-right: 5px;
+}
+
+.day {
+    background-color: rgb(63, 66, 73);
+    color: whitesmoke;
+}
+.day0 {
+    background-color: rgb(235, 234, 250);
 }
 #btn, #text {
     margin-top: 15px;
     width: 100%;
 }
+
+#btn {
+    background-color:rgb(0, 183, 255);
+}
 .search {
     text-align: center;
 }
 form {
+    padding-bottom: 15px;
+    border-bottom: 1px solid black;
+}
+
+#icon {
+    display:inline-flex;
+}
+
+.history-sect {
+    text-align: center;
     padding-bottom: 15px;
     border-bottom: 1px solid black;
 }
