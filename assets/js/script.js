@@ -11,7 +11,6 @@ var getCurrentWeather = function(city) {
             response.json().then(function(data) {
                 console.log(data);
                 appendCurrentData(data);
-                historyAdd(city);
                 saveSearch(city);
                 var lon = data.coord.lon;
                 var lat = data.coord.lat;
@@ -29,9 +28,18 @@ var getFutureWeather = function(lon, lat) {
             response.json().then(function(data) {
                 console.log(data);
                 var tempUV = document.querySelector(`#uv`);
+                // var tempSpan = document.querySelector(`.uv-span`);
                 var currentUVI = data.current.uvi;
                 tempUV.textContent = "UV Index: ";
                 tempUV.textContent += currentUVI;
+                if (currentUVI < 5) {
+                    tempUV.setAttribute("class", "fav");
+                } else if (5 <= tempUV < 7) {
+                    tempUV.setAttribute("class", "mod");
+                } else if (tempUV >= 7) {
+                    tempUV.setAttribute("class", "extr");
+                };
+
                 console.log(currentUVI);
                 for (i = 1; i < 6; i++) {
                     appendFutureData(data, i);
@@ -96,20 +104,32 @@ var appendFutureData = function(data, i) {
 };
 
 var historyAdd = function(searchText) {
-    var newHisEl = document.createElement(`p`);
+    var newHisEl = document.createElement(`button`);
+    newHisEl.setAttribute("class", "histBtn");
     var newHis = document.createTextNode(`${searchText}`);
 
     newHisEl.appendChild(newHis)
     historyUL.append(newHisEl);
 
+    newHisEl.addEventListener("click", function() {
+        getCurrentWeather(searchText);
+    })
+
 };
 // pretty good reference for future use of localStorage :) *Dont forget to use JSON stringify and parse!*
 var saveSearch = function(city) {
     var savePull = JSON.parse(localStorage.getItem("cityHist")) || [];
-    
+    for (i = 0; i < savePull.length; i++) {
+        if (savePull[i].city === city) {
+            return;
+        } 
+        // else {
+        // }
+    }
     savePull.push({
         city: city
     });
+    historyAdd(city);
     localStorage.setItem("cityHist", JSON.stringify(savePull));
 };
 
@@ -134,3 +154,4 @@ button.addEventListener("click", function() {
 
     searchText = "";
 });
+
