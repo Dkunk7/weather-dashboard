@@ -40,9 +40,13 @@ header {
 #text {
     border-width: 1px;
 }
-#btn, .histBtn {
+#btn {
     background-color:rgb(0, 183, 255);
     border: none;
+}
+.histBtn {
+    border: none;
+    background-color:rgb(159, 190, 201);
 }
 .search {
     text-align: center;
